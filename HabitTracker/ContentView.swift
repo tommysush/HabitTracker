@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-let message = "ByeBye, Git"
+let message = "Hello, Git"
 
 struct ContentView: View {
     var body: some View {
