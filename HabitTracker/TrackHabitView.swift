@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TrackHabitView: View {
-    // 告知TrackHabitView存在一個Habit類型的物件，以及一個index
+    // 告知TrackHabitView有一個Habit物件的存在，以及一個index
     @ObservedObject var habit: Habit
     var index: Int
 
@@ -16,22 +16,67 @@ struct TrackHabitView: View {
         NavigationView {
             VStack {
                 HStack {
-                    Text(habit.activities[index].description)
-                    Text("已完成回數: ")
-                    Text("\(habit.activities[index].completedTimes)")
+                    // 減少該項目次數的按鈕
+                    Button(action: {
+                        self.habit.activities[self.index].completedTimes -= 1
+                    }, label: {
+                        Image(systemName: "gobackward.minus")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 30, height: 30)
+                            .foregroundColor(.green)
+                    })
                     
-                    Button("增加1回") {
+                    Spacer()
+                    
+                    VStack {
+                        HStack {
+                            Text("已完成 ")
+                            Text("\(habit.activities[index].completedTimes)")
+                                .font(.largeTitle)
+                                .fontWeight(.bold)
+                                .foregroundColor(.yellow)
+                            Text(" 回")
+                        }
+                    }
+                    
+                    Spacer()
+                    
+                    // 增加該項目次數的按鈕
+                    Button(action: {
                         self.habit.activities[self.index].completedTimes += 1
+                    }, label: {
+                        Image(systemName: "goforward.plus")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 30, height: 30)
+                            .foregroundColor(.red)
+                    })
+                }
+                .padding(30)
+                
+                Spacer()
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                // TrackHabitView的頁面標題
+                ToolbarItem(placement: .principal) {
+                    VStack {
+                        Text(self.habit.activities[index].name)
+                            .font(.title2)
+                            .fontWeight(.bold)
+                        Text(self.habit.activities[index].description)
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
                     }
                 }
             }
-            .navigationBarTitle(habit.activities[index].name)
         }
     }
 }
 
 struct TrackHabitView_Previews: PreviewProvider {
     static var previews: some View {
-        TrackHabitView(habit: Habit(), index: 0)
+        TrackHabitView(habit: Habit(), index: 30)
     }
 }
