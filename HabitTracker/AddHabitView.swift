@@ -61,9 +61,11 @@ struct AddHabitView: View {
                 ToolbarItem(placement: .principal) {
                     HStack {
                         Image(systemName: "gauge.badge.plus")
-                        Text("新增追蹤").font(.headline)
+                        Text("新增追蹤")
+                            .fontWeight(.bold)
                     }
-                    .font(.title)
+                    .font(.title2)
+                    .foregroundColor(.orange)
                 }
                 // 儲存鈕
                 ToolbarItem(placement: .navigationBarTrailing) {
